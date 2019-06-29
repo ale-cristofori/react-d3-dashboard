@@ -1,10 +1,10 @@
 import React, {useState} from 'react';
-import injectSheet from "react-jss";
+import { createUseStyles }  from "react-jss";
 import {pieChartData, barChartData, lineChartData} from './testData';
 
 import logo from './logo.svg';
 
-const styles = theme => ({
+const useStyles = createUseStyles({
   app : {
     textAlign: 'center'
   },
@@ -36,20 +36,17 @@ const styles = theme => ({
   }
 });
 
-const App = ({classes}) => {
-
+const App = (props) => {
   const [selectedPie, setSelectedPie] = useState(pieChartData);
   const [selectedBar, setSelectedChart] = useState(barChartData);
   const [selectedLine, setSelectedLine] = useState(lineChartData);
-
-  
-
+  const classes = useStyles();
   return(
     <div className={classes.app}>
     <header className={classes.appHeader}>
       <img src={logo} className={classes.appLogo} alt="logo" />
       <p>
-        Edit <code>src/App.js</code> and save to reload.
+        Edit <code>src/App.js</code> and {props.welcomeText}.
       </p>
       <a
         className={classes.appLink}
@@ -62,8 +59,7 @@ const App = ({classes}) => {
     </header>
   </div>
   );
-
 };
 
 
-export default injectSheet(styles)(App);
+export default App;
