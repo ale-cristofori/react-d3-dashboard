@@ -1,4 +1,4 @@
-const pieChartData = [
+const DonutChartData = [
     {category: "Sam", measure: 0.30},
     {category: "Peter", measure: 0.25},
     {category: "John", measure: 0.15},
@@ -94,4 +94,4 @@ const lineChartData = [
     { group: "Steve", category: 2012, measure: 7035 }
 ];
 
-export {pieChartData, barChartData, lineChartData}
+export {DonutChartData, barChartData, lineChartData}

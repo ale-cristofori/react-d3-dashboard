@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import { createUseStyles }  from "react-jss";
 import {pieChartData, barChartData, lineChartData} from './testData';
-
+import DonutComponent from './components/PieChart/DonutComponent';
 import logo from './logo.svg';
 
 const useStyles = createUseStyles({
@@ -37,26 +37,14 @@ const useStyles = createUseStyles({
 });
 
 const App = (props) => {
-  const [selectedPie, setSelectedPie] = useState(pieChartData);
   const [selectedBar, setSelectedChart] = useState(barChartData);
   const [selectedLine, setSelectedLine] = useState(lineChartData);
   const classes = useStyles();
   return(
-    <div className={classes.app}>
-    <header className={classes.appHeader}>
-      <img src={logo} className={classes.appLogo} alt="logo" />
-      <p>
-        Edit <code>src/App.js</code> and {props.welcomeText}.
-      </p>
-      <a
-        className={classes.appLink}
-        href="https://reactjs.org"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        Learn React
-      </a>
-    </header>
+  <div>
+    <svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet"> 
+      <DonutComponent x={15} y={15} />
+    </svg>
   </div>
   );
 };
