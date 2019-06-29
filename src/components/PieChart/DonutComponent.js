@@ -12,9 +12,9 @@ const DonutComponent = (props) => {
 
     const {x, y} = props;
     const [selectedDonut, setSelectedDonut] = useState(DonutChartData);
-    const [donutTitle, setDonutTitle] = useState('test donut title');
+    const [donutTitle, setDonutTitle] = useState('');
     const [textFill, setTextFill] = useState('');
-    const [selectedCount, setSelectedCount] = useState('test selected count');
+    const [selectedCount, setSelectedCount] = useState('');
     const [outerRadius, setOuterRadius] = useState(15);
     const [innerRadius, setInnerRadius] = useState(15 / 1.8);
     const [innerRadiusSelected, setInnerRadiusSelected] = useState( 15* .45 );
@@ -34,10 +34,11 @@ const DonutComponent = (props) => {
         const sliceInnerRadius = hoveredSlice === i ? innerRadiusSelected : innerRadius;
         return(
         <SliceComponent 
+            key={i}
             innerRadius={sliceInnerRadius}
             outerRadius={outerRadius} 
             value={measure}
-            label={"test"}
+            label={DonutChartData[i].category}
             fill={colorScale(i)}
             onClickSlice={onClickSlice}
             onMouseOverSlice={onMouseOverSlice}
@@ -55,7 +56,6 @@ const DonutComponent = (props) => {
 
     return(
         <g transform={`translate(${x}, ${y})`}>
-          {/* Render a slice for each data point */}
           {pieChart(measures).map(renderSlice)}
         <text
             x="-4.2em"
