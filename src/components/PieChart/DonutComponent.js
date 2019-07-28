@@ -16,9 +16,6 @@ const DonutComponent = (props) => {
     const [textFill, setTextFill] = useState('');
     const [selectedCount, setSelectedCount] = useState('');
     const [outerRadius, setOuterRadius] = useState(15);
-    const [innerRadius, setInnerRadius] = useState(15 / 1.8);
-    const [innerRadiusSelected, setInnerRadiusSelected] = useState( 15* .45 );
-    const [hoveredSlice, setHoveredSlice] = useState(null);
 
     const colorScale = scaleOrdinal(schemeCategory10);
     const onClickSlice = () => {
@@ -31,11 +28,11 @@ const DonutComponent = (props) => {
 
     }
     const renderSlice = (measure, i) => {
-        const sliceInnerRadius = hoveredSlice === i ? innerRadiusSelected : innerRadius;
+        
         return(
         <SliceComponent 
             key={i}
-            innerRadius={sliceInnerRadius}
+            index={i}
             outerRadius={outerRadius} 
             value={measure}
             label={DonutChartData[i].category}
