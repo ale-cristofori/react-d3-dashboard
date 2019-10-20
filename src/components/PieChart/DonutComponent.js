@@ -15,32 +15,29 @@ const DonutComponent = (props) => {
     const [donutTitle, setDonutTitle] = useState('');
     const [textFill, setTextFill] = useState('');
     const [selectedCount, setSelectedCount] = useState('');
-    const [outerRadius, setOuterRadius] = useState(15);
+    
 
     const colorScale = scaleOrdinal(schemeCategory10);
     const onClickSlice = () => {
 
     }
-    const onMouseOverSlice = () => {
-
+    const onMouseOverSlice = (index) => {
+        console.log(index);
     }
-    const onMouseOutSlice = () => {
+    // const onMouseOutSlice = (index) => {
 
-    }
+    // }
     const renderSlice = (measure, i) => {
         
         return(
         <SliceComponent 
             key={i}
             index={i}
-            outerRadius={outerRadius} 
             value={measure}
             label={DonutChartData[i].category}
             fill={colorScale(i)}
             onClickSlice={onClickSlice}
-            onMouseOverSlice={onMouseOverSlice}
-            onMouseOutSlice={onMouseOutSlice}
-            />
+            onMouseOverSlice={onMouseOverSlice}/>
         );
     }
 

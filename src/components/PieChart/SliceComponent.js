@@ -23,44 +23,40 @@ const SliceComponent = (props) => {
         value, 
         fill,
         label, 
-        onClickSlice
+        onClickSlice,
+        onMouseOverSlice
     } = props;
 
     let sliceArc = arc().innerRadius(innerRadius).outerRadius(outerRadius);
 
-    useEffect(() => {
-        let arcFinal3;
-        let el = select(sliceRef.current);
-        if (hoveredSlice !== null) {
-            arcFinal3 = arc().innerRadius(innerRadiusSelected).outerRadius(outerRadius)
-            .startAngle(hoveredSlice.startAngle)
-            .endAngle(hoveredSlice.endAngle);
-            el.select("path")
-            .transition()
-              .duration(600)
-              .attr("d", arcFinal3)
-        }
-        setHoveredSlice(null);
-    }, [sliceRef, hoveredSlice, innerRadiusSelected, outerRadius]);
+    const animateSlice = (slice, innerRadius) => {
+        const el = select(sliceRef.current);
+        const arcFinal3 = arc().innerRadius(innerRadius).outerRadius(outerRadius)
+        .startAngle(hoveredSlice.startAngle)
+        .endAngle(hoveredSlice.endAngle);
+        el.select("path")
+        .transition()
+          .duration(600)
+          .attr("d", arcFinal3)
+    }
 
     useEffect(() => {
-        let arcFinal3;
-        let el = select(sliceRef.current);
-        if (unHoveredSlice !== null) {
-            arcFinal3 = arc().innerRadius(innerRadius).outerRadius(outerRadius)
-            .startAngle(unHoveredSlice.startAngle)
-            .endAngle(unHoveredSlice.endAngle);
-            el.select("path")
-            .transition()
-              .duration(600)
-              .attr("d", arcFinal3)
+        if (hoveredSlice !== null) {
+            animateSlice(hoveredSlice, innerRadiusSelected);
         }
         setUnHoveredSlice(null);
-    }, [sliceRef, unHoveredSlice, innerRadius, outerRadius]);
+    }, [hoveredSlice]);
+
+    useEffect(() => {
+        if (unHoveredSlice !== null) {
+            animateSlice(unHoveredSlice, innerRadius);
+        }
+        setHoveredSlice(null);
+    }, [unHoveredSlice]);
 
     return(
         <g onClick={(e) => onClickSlice(label, fill, value)} 
-           onMouseEnter={(e) => setHoveredSlice(value)}
+           onMouseEnter={(e) => {setHoveredSlice(value) ;onMouseOverSlice(index)} }
            onMouseLeave={(e) => setUnHoveredSlice(value)}
            ref={sliceRef}
            index={index}>
