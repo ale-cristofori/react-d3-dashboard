@@ -18,15 +18,16 @@ const DonutComponent = (props) => {
     
 
     const colorScale = scaleOrdinal(schemeCategory10);
-    const onClickSlice = () => {
 
+    const onClickSlice = (label, fill, value) => {
+        setDonutTitle(label);
+        setSelectedCount(value.data);
+        setTextFill(fill);
     }
+
     const onMouseOverSlice = (index) => {
-        console.log(index);
     }
-    // const onMouseOutSlice = (index) => {
 
-    // }
     const renderSlice = (measure, i) => {
         
         return(
@@ -57,8 +58,8 @@ const DonutComponent = (props) => {
             textAnchor="middle"
             style={{fontSize: "2px", fontFamily: "verdana", fontWeight: "bold"}}
             fill={textFill}>
-        {donutTitle && <tspan dy="0em" dx="5em">{donutTitle}</tspan>}
-        {selectedCount && <tspan dy="1.2em" dx="-4.65em"> Total: {selectedCount}</tspan>}
+        {donutTitle && <tspan dy="0em" dx="4.36em">{donutTitle}</tspan>}
+        {selectedCount && <tspan dy="1.2em" dx="-2.35em">{selectedCount * 100}%</tspan>}
         </text>
         </g>
     )
