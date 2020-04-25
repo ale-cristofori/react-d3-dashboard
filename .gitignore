@@ -21,3 +21,24 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+/blob_storage
+/Cache
+/CachedData
+/CachedExtensions
+/Code Cache
+/Dictionaries
+/GPUCache
+/logs
+/User
+/webrtc_event_logs
+
+
+Cookies
+Cookies-journal
+languagepacks.json
+machineid
+Network Persistent State
+rapid_render.json
+storage.json
+TransportSecurity
