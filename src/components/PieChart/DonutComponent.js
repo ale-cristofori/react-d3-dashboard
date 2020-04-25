@@ -53,13 +53,13 @@ const DonutComponent = (props) => {
         <g transform={`translate(${x}, ${y})`}>
           {pieChart(measures).map(renderSlice)}
         <text
-            x="-4.2em"
-            y="-.35em"
+            x="0"
+            y="-1.5em"
             textAnchor="middle"
             style={{fontSize: "2px", fontFamily: "verdana", fontWeight: "bold"}}
             fill={textFill}>
-        {donutTitle && <tspan dy="0em" dx="4.36em">{donutTitle}</tspan>}
-        {selectedCount && <tspan dy="1.2em" dx="-2.35em">{selectedCount * 100}%</tspan>}
+        {donutTitle && <tspan dy="1em" x="0.3em">{donutTitle} </tspan>}
+        {selectedCount && <tspan dy="1.5em" x="0.3em">{selectedCount * 100}%</tspan>}
         </text>
         </g>
     )

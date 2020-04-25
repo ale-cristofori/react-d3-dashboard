@@ -56,7 +56,7 @@ const SliceComponent = (props) => {
 
     return(
         <g onClick={(e) => onClickSlice(label, fill, value)} 
-           onMouseEnter={(e) => {setHoveredSlice(value) ;onMouseOverSlice(index)} }
+           onMouseEnter={(e) => {setHoveredSlice(value); onMouseOverSlice(index)} }
            onMouseLeave={(e) => setUnHoveredSlice(value)}
            ref={sliceRef}
            index={index}>
