@@ -33,6 +33,7 @@ yarn-error.log*
 /logs
 /User
 /webrtc_event_logs
+/Workspaces
 
 
 Cookies
