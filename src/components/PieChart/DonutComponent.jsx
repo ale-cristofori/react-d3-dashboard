@@ -10,7 +10,7 @@ import SliceComponent from './SliceComponent';
 
 const DonutComponent = (props) => {
 
-    const {x, y} = props;
+    const {x, y, onChangeGroup} = props;
     const [selectedDonut, setSelectedDonut] = useState(DonutChartData);
     const [donutTitle, setDonutTitle] = useState('');
     const [textFill, setTextFill] = useState('');
@@ -23,6 +23,7 @@ const DonutComponent = (props) => {
         setDonutTitle(label);
         setSelectedCount(value.data);
         setTextFill(fill);
+        onChangeGroup(label, fill);
     }
 
     const onMouseOverSlice = (index) => {
@@ -41,10 +42,6 @@ const DonutComponent = (props) => {
             onMouseOverSlice={onMouseOverSlice}/>
         );
     }
-
-    useEffect(() => {
-
-    });
 
     let pieChart = pie().sort(null);
     const measures = DonutChartData.map(item => item.measure);
