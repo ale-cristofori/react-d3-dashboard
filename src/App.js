@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { createUseStyles }  from "react-jss";
-import {pieChartData, barChartData, lineChartData} from './testData';
+import {barChartData, lineChartData} from './testData';
 import DonutComponent from './components/PieChart/DonutComponent';
 import BarChart from './components/BarChart/BarChart';
-import logo from './logo.svg';
 
 const useStyles = createUseStyles({
   app : {
@@ -38,21 +37,21 @@ const useStyles = createUseStyles({
 });
 
 const App = (props) => {
-  const [selectedGroup, setSelectedGroup] = useState(() => barChartData.filter((datum) =>  datum.group === 'All'));
+  const [selectedGroup, setSelectedGroup] = useState('All');
   const [selectedLine, setSelectedLine] = useState(lineChartData);
-  const [barColour, setBarColour] = useState('steelblue');
+  const [groupColour, setGroupColour] = useState('lightgrey');
   const classes = useStyles();
 
   function updateBarChart(group, colour) {
-    setSelectedGroup(barChartData.filter((datum) => datum.group === group));
-    setBarColour(colour);
+    setSelectedGroup(group);
+    setGroupColour(colour);
   }
 
   return(
   <div>
     <svg viewBox="-2 -2 100 100" preserveAspectRatio="xMidYMid meet"> 
       <DonutComponent x={15} y={15} onChangeGroup={updateBarChart}/>
-      <BarChart positionX={35} positionY={35} width={80} height={100} selectedGroup={selectedGroup} barColour={barColour}/>
+      <BarChart positionX={35} positionY={35} width={80} height={100} selectedGroup={selectedGroup} barColour={groupColour}/>
     </svg>
   </div>
   );

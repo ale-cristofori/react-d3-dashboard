@@ -3,7 +3,7 @@ import { scaleOrdinal } from "d3-scale";
 import { pie } from "d3-shape";
 import { schemeCategory10 } from 'd3';
 
-import { DonutChartData } from '../../testData';
+import { donutChartData } from '../../testData';
 import SliceComponent from './SliceComponent';
 
 
@@ -11,7 +11,7 @@ import SliceComponent from './SliceComponent';
 const DonutComponent = (props) => {
 
     const {x, y, onChangeGroup} = props;
-    const [selectedDonut, setSelectedDonut] = useState(DonutChartData);
+    const [selectedDonut, setSelectedDonut] = useState(donutChartData);
     const [donutTitle, setDonutTitle] = useState('');
     const [textFill, setTextFill] = useState('');
     const [selectedCount, setSelectedCount] = useState('');
@@ -36,7 +36,7 @@ const DonutComponent = (props) => {
             key={i}
             index={i}
             value={measure}
-            label={DonutChartData[i].category}
+            label={donutChartData[i].category}
             fill={colorScale(i)}
             onClickSlice={onClickSlice}
             onMouseOverSlice={onMouseOverSlice}/>
@@ -44,7 +44,7 @@ const DonutComponent = (props) => {
     }
 
     let pieChart = pie().sort(null);
-    const measures = DonutChartData.map(item => item.measure);
+    const measures = donutChartData.map(item => item.measure);
 
     return(
         <g transform={`translate(${x}, ${y})`}>
