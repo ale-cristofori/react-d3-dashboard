@@ -1,7 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import { arc } from "d3-shape";
 import { select } from 'd3';
-import { SlowBuffer } from 'buffer';
 
 const SliceComponent = (props) => {
 
