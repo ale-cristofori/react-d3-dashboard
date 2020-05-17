@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState } from 'react';
 import { scaleOrdinal } from "d3-scale";
 import { pie } from "d3-shape";
 import { schemeCategory10 } from 'd3';
@@ -6,19 +6,19 @@ import { schemeCategory10 } from 'd3';
 import { donutChartData } from '../../testData';
 import SliceComponent from './SliceComponent';
 
-
-
 const DonutComponent = (props) => {
 
     const {x, y, onChangeGroup} = props;
-    const [selectedDonut, setSelectedDonut] = useState(donutChartData);
+    
+    //react hooks
     const [donutTitle, setDonutTitle] = useState('');
     const [textFill, setTextFill] = useState('');
     const [selectedCount, setSelectedCount] = useState('');
     
-
+    //slices d3 color definition
     const colorScale = scaleOrdinal(schemeCategory10);
 
+    //main function responding to a click on a slice
     const onClickSlice = (label, fill, value) => {
         setDonutTitle(label);
         setSelectedCount(value.data);
@@ -26,11 +26,9 @@ const DonutComponent = (props) => {
         onChangeGroup(label, fill);
     }
 
-    const onMouseOverSlice = (index) => {
-    }
-
+    //wrapper function for the pie chart to 
+    //render slices as ReactJs components
     const renderSlice = (measure, i) => {
-        
         return(
         <SliceComponent 
             key={i}
@@ -38,14 +36,15 @@ const DonutComponent = (props) => {
             value={measure}
             label={donutChartData[i].category}
             fill={colorScale(i)}
-            onClickSlice={onClickSlice}
-            onMouseOverSlice={onMouseOverSlice}/>
+            onClickSlice={onClickSlice}/>
         );
     }
 
+    //creation of the pie
     let pieChart = pie().sort(null);
+    //creation of the data array from test data
     const measures = donutChartData.map(item => item.measure);
-
+    
     return(
         <g transform={`translate(${x}, ${y})`}>
           {pieChart(measures).map(renderSlice)}

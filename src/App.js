@@ -1,47 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import { createUseStyles }  from "react-jss";
-import {barChartData, lineChartData} from './testData';
+import React, { useState } from 'react';
+import { lineChartData } from './testData';
 import DonutComponent from './components/PieChart/DonutComponent';
 import BarChart from './components/BarChart/BarChart';
 
-const useStyles = createUseStyles({
-  app : {
-    textAlign: 'center'
-  },
-  appLogo : {
-    animation: 'App-logo-spin infinite 20s linear',
-    height: '40vmin',
-    pointerEvents: 'none'
-  },
-  appHeader: {
-    backgroundColor: '#282c34',
-    minHeight: '100vh',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-    fontSize: 'calc(10px + 2vmin)',
-    color: 'white'
-  },
-  appLink: {
-    color: '#61dafb'
-  },
-  '@keyframes App-logo-spin': {
-    from: {
-        transform: 'rotate(0deg)'
-    },
-    to: {
-        transform: 'rotate(360deg)'
-    }
-  }
-});
-
 const App = (props) => {
+
+  // React hooks
   const [selectedGroup, setSelectedGroup] = useState('All');
   const [selectedLine, setSelectedLine] = useState(lineChartData);
   const [groupColour, setGroupColour] = useState('lightgrey');
-  const classes = useStyles();
 
+  //function that will hook into the state to change it 
   function updateBarChart(group, colour) {
     setSelectedGroup(group);
     setGroupColour(colour);
