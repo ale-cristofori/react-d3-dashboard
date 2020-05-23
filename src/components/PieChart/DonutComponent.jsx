@@ -28,23 +28,24 @@ const DonutComponent = (props) => {
 
     //wrapper function for the pie chart to 
     //render slices as ReactJs components
-    const renderSlice = (measure, i) => {
+    const renderSlice = (measure) => {
+        const index = measure.index;
         return(
         <SliceComponent 
-            key={i}
-            index={i}
+            key={index}
+            index={index}
             value={measure}
-            label={donutChartData[i].category}
-            fill={colorScale(i)}
+            label={donutChartData[index].category}
+            fill={colorScale(index)}
             onClickSlice={onClickSlice}/>
         );
-    }
+    };
 
     //creation of the pie
     let pieChart = pie().sort(null);
     //creation of the data array from test data
     const measures = donutChartData.map(item => item.measure);
-    
+
     return(
         <g transform={`translate(${x}, ${y})`}>
           {pieChart(measures).map(renderSlice)}
