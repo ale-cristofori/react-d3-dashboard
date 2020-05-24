@@ -16,6 +16,12 @@ const animateSlice = (sliceRef, slice, innerRadius, outerRadius) => {
         .attr("d", arcFinal3);
 };
 
+const sliceTextStyle = {
+  fontSize: "1px",
+  fontFamily: "verdana",
+  fontWeight: "bold"
+};
+
 const SliceComponent = props => {
     const sliceRef = React.createRef();
     const [hoveredSlice, setHoveredSlice] = useState(null);
@@ -65,11 +71,7 @@ const SliceComponent = props => {
         dy=".35em"
         textAnchor="middle"
         fill="white"
-        style={{
-          fontSize: "1px",
-          fontFamily: "verdana",
-          fontWeight: "bold"
-        }}>
+        style={sliceTextStyle}>
         {label}
       </text>
     </g>

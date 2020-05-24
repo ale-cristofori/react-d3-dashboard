@@ -5,7 +5,7 @@ import BarChart from './components/BarChart/BarChart';
 
 const App = (props) => {
 
-  // React hooks
+  // React hooks with common state values for all components 
   const [selectedGroup, setSelectedGroup] = useState('All');
   const [selectedLine, setSelectedLine] = useState(lineChartData);
   const [groupColour, setGroupColour] = useState('lightgrey');

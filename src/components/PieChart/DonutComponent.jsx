@@ -6,6 +6,12 @@ import { schemeCategory10 } from 'd3';
 import { donutChartData } from '../../testData';
 import SliceComponent from './SliceComponent';
 
+const donutTextStyle = {
+    fontSize: "2px", 
+    fontFamily: "verdana", 
+    fontWeight: "bold"
+};
+
 const DonutComponent = (props) => {
 
     const {x, y, onChangeGroup} = props;
@@ -35,7 +41,7 @@ const DonutComponent = (props) => {
             key={index}
             index={index}
             value={measure}
-            label={donutChartData[index].category}
+            label={donutChartData[index].group}
             fill={colorScale(index)}
             onClickSlice={onClickSlice}/>
         );
@@ -53,7 +59,7 @@ const DonutComponent = (props) => {
             x="0"
             y="-1.5em"
             textAnchor="middle"
-            style={{fontSize: "2px", fontFamily: "verdana", fontWeight: "bold"}}
+            style={donutTextStyle}
             fill={textFill}>
         {donutTitle && <tspan dy="1em" x="0.3em">{donutTitle} </tspan>}
         {selectedCount && <tspan dy="1.5em" x="0.3em">{selectedCount * 100}%</tspan>}
