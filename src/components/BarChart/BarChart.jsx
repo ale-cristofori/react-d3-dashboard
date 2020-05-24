@@ -55,7 +55,7 @@ const BarChart = (props) => {
     const categoriesLabel = selectedData.map((datum, index) => 
     <text 
         key={index}
-        x={(index * 8) + 3.5} 
+        x={(index * 8) + 3.9} 
         y={-3.5} 
         textAnchor="middle" 
         transform={`scale(1, -1)`}
