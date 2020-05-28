@@ -34,6 +34,7 @@ yarn-error.log*
 /User
 /webrtc_event_logs
 /Workspaces
+/Session Storage
 
 
 Cookies
