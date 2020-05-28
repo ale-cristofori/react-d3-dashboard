@@ -6,79 +6,68 @@ const lineTileTextStyle = {
     fontSize: "1px", 
     fontFamily: "verdana",
     fontWeight: "bold"
-}
+};
 
-const amimateLine = (margin, currentLine, selectedData, lineColour) => {
-    const width = 500 - margin.left - margin.right;
-    const height = 150 - margin.top - margin.bottom;
-    const xScale = scaleLinear()
-    .domain([0, selectedData.length - 1])
-    .range([0, width]);
-
-    const yScale = scaleLinear()
-        .domain([0, max(selectedData, d => d.measure)])
-        .range([height, 0]);
+const amimateLine = (xScale, yScale, currentLine, lineColour, selectedData) => {
 
     const lineDefinition = line()
             .x((d, i) => xScale(i) * 0.10)
             .y(d => yScale(d.measure) * 0.10);
-    const points = selectedData.map( (item, index) => { return {x: (xScale(index) * 0.10), y: (yScale(item.measure) * 0.10)}})
+    
     const newLinePath = lineDefinition(selectedData);
+
     currentLine.transition()
         .duration(650)
         .attr("d", newLinePath)
         .attr("stroke", lineColour)
+};
+
+const animateDots = (xScale, yScale, dotsContainer, dotsColour, selectedData) => {
+
+    const dotsCoords = selectedData.map( (item, index) => { return {x: (xScale(index) * 0.10), y: (yScale(item.measure) * 0.10)}});
     
-    points.map((point) => {
-        select(".line")
-        .append("circle")
-        .attr("cx", point.x)
-        .attr("cy", point.y)
-        .attr("r", 0.5)
-        .attr("fill", "red");
-    });
+    const dots = dotsContainer.selectAll('circle');
+    
+    dots.each(function (d, i) { 
+        select(this)
+        .transition()
+        .duration(650)
+        .attr("cx", dotsCoords[i].x)
+        .attr("cy", dotsCoords[i].y) 
+        .attr("fill", dotsColour)});
 };
 
 const Dot = (props) => {
 
-    const {selectedData, margin} = props;
+    const {xScale, yScale, dotsColour, selectedData } = props;
+    const dotsRef = React.createRef();
+    useEffect(() => {
+        const dotsContainer = select(dotsRef.current);
+        animateDots(xScale, yScale, dotsContainer, dotsColour, selectedData);
+    });
+    
+    const dots = selectedData.map((item, index) => <circle r={0.4}></circle>);
 
+    return(
+        <g ref={dotsRef}>
+            {dots}
+        </g>
 
-    // const xScale = scaleLinear()
-    // .domain([0, 1])
-    // .range([0, width]);
-
-    // const yScale = scaleLinear()
-    //     .domain([0, max(selectedData.measure)])
-    //     .range([height, 0]);
-        
-    // const circleDefinition = line()
-    //         .x((d, i) => xScale(i) * 0.10)
-    //         .y(d => yScale(d.measure) * 0.10);
-
-    const dots = selectedData.map(datum => <circle fill="blue" cx={3} cy={10} r={1}></circle>) 
-    return dots
-}
+    );
+};
 
 const Line = (props) => {
 
-    const { margin, lineColour, selectedData } = props;
+    const { xScale, yScale, lineColour, selectedData} = props;
     const lineRef = React.createRef();
-    const width = 500 - margin.left - margin.right;
-    const height = 150 - margin.top - margin.bottom;
-
-    // const dots = selectedData.map((datum) =>
-    // <Dot datum={datum} margin={margin}/>);
 
     useEffect(() => {
-
-
         const currentLine = select(lineRef.current);
-        amimateLine(margin, currentLine, selectedData, lineColour);
+        amimateLine(xScale, yScale, currentLine, lineColour, selectedData);
     });
 
     return(
-        <g className="line">
+        <g>
             <path ref={lineRef} strokeWidth="0.3" fill="none"/>
         </g>
 
@@ -90,12 +79,22 @@ const LineChart = (props) =>  {
     const { selectedGroup, lineColour, positionX, positionY } = props;
     const margin  = {top: 20, right: 10, bottom: 0, left: 50};
     const selectedData = lineChartData.filter((datum) =>  datum.group === selectedGroup);
+    const width = 500 - margin.left - margin.right;
+    const height = 150 - margin.top - margin.bottom;
+    
+    const xScale = scaleLinear()
+    .domain([0, selectedData.length - 1])
+    .range([0, width]);
+
+    const yScale = scaleLinear()
+        .domain([0, max(selectedData, d => d.measure)])
+        .range([height, 0]);
+
 
     return(
         <g transform={`translate(${positionX}, ${positionY})`}>
-            <Line margin={margin} lineColour={lineColour} selectedData={selectedData}/>
-            {/* <Dot className="dot" margin={margin} selectedData={selectedData} /> */}
-            {/* <text style={lineTileTextStyle}>here the line component</text> */}
+            <Line xScale={xScale} yScale={yScale} lineColour={lineColour} selectedData={selectedData}/>
+            <Dot  xScale={xScale} yScale={yScale} dotsColour={lineColour} selectedData={selectedData} />
         </g>);
 
 };
