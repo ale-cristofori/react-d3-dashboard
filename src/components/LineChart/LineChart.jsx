@@ -1,12 +1,18 @@
 import React, { useEffect } from 'react';
-import { scaleLinear, max, line, select, path, selectAll } from 'd3';
+import { scaleLinear, max, line, select } from 'd3';
 import { lineChartData } from '../../testData';
 
-const lineTileTextStyle = {
-    fontSize: "1px", 
+const lineTitleTextStyle = {
+    fontSize: "8px", 
     fontFamily: "verdana",
     fontWeight: "bold"
 };
+
+const lineSubTitleTextStyle = {
+    fontSize: "2px", 
+    fontFamily: "verdana",
+    fontWeight: "bold"
+}
 
 const amimateLine = (xScale, yScale, currentLine, lineColour, selectedData) => {
 
@@ -27,15 +33,28 @@ const animateDots = (xScale, yScale, dotsContainer, dotsColour, selectedData) =>
     const dotsCoords = selectedData.map( (item, index) => { return {x: (xScale(index) * 0.10), y: (yScale(item.measure) * 0.10)}});
     
     const dots = dotsContainer.selectAll('circle');
+
+    const getDotColour = index => {
+        const measures = selectedData.map(item => item.measure);
+        const minValue = Math.min.apply( null, measures);
+        const maxValue = Math.max.apply( null, measures);
+        let fillColour = "white";
+        if (measures[index] === minValue) { fillColour = "red" }
+        else if(measures[index] === maxValue) { fillColour = "green" }
+        return fillColour
+    }
     
-    dots.each(function (d, i) { 
+    dots.each(function (d, i) {
         select(this)
         .transition()
         .duration(650)
         .attr("cx", dotsCoords[i].x)
-        .attr("cy", dotsCoords[i].y) 
-        .attr("fill", dotsColour)});
-};
+        .attr("cy", dotsCoords[i].y)
+        .attr("fill", getDotColour(i))
+        .attr("stroke", dotsColour)
+        .attr("stroke-width", 0.150)
+        });
+}
 
 const Dot = (props) => {
 
@@ -46,7 +65,7 @@ const Dot = (props) => {
         animateDots(xScale, yScale, dotsContainer, dotsColour, selectedData);
     });
     
-    const dots = selectedData.map((item, index) => <circle r={0.4}></circle>);
+    const dots = selectedData.map((item, index) => <circle r={0.3}><title>{`${item.category}: ${Math.floor(item.measure)}`}</title></circle>);
 
     return(
         <g ref={dotsRef}>
@@ -93,6 +112,8 @@ const LineChart = (props) =>  {
 
     return(
         <g transform={`translate(${positionX}, ${positionY})`}>
+            <text textAnchor="middle" style={lineSubTitleTextStyle} fill="lightgrey" x={22} y={-2}>Performance 2012</text>
+            <text textAnchor="middle" style={lineTitleTextStyle} fill="grey" x={22} y={8}>{selectedData[selectedData.length -1].measure}</text>
             <Line xScale={xScale} yScale={yScale} lineColour={lineColour} selectedData={selectedData}/>
             <Dot  xScale={xScale} yScale={yScale} dotsColour={lineColour} selectedData={selectedData} />
         </g>);
