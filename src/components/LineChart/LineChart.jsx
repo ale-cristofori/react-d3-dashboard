@@ -56,16 +56,21 @@ const animateDots = (xScale, yScale, dotsContainer, dotsColour, selectedData) =>
         });
 }
 
-const Dot = (props) => {
+const Dots = (props) => {
 
     const {xScale, yScale, dotsColour, selectedData } = props;
+
+    /*the ref is created on the <g> group 'container' element, being 
+    Dots a component that holds multiple svg elements*/
     const dotsRef = React.createRef();
+
     useEffect(() => {
         const dotsContainer = select(dotsRef.current);
         animateDots(xScale, yScale, dotsContainer, dotsColour, selectedData);
     });
     
-    const dots = selectedData.map((item, index) => <circle r={0.3}><title>{`${item.category}: ${Math.floor(item.measure)}`}</title></circle>);
+    //here we create the svg elements array
+    const dots = selectedData.map((item, index) => <circle key={index} r={0.3}><title>{`${item.category}: ${Math.floor(item.measure)}`}</title></circle>);
 
     return(
         <g ref={dotsRef}>
@@ -101,6 +106,7 @@ const LineChart = (props) =>  {
     const width = 500 - margin.left - margin.right;
     const height = 150 - margin.top - margin.bottom;
     
+    //the scaling functions (xScale, yScale) are common for both components
     const xScale = scaleLinear()
     .domain([0, selectedData.length - 1])
     .range([0, width]);
@@ -115,7 +121,7 @@ const LineChart = (props) =>  {
             <text textAnchor="middle" style={lineSubTitleTextStyle} fill="lightgrey" x={22} y={-2}>Performance 2012</text>
             <text textAnchor="middle" style={lineTitleTextStyle} fill="grey" x={22} y={8}>{selectedData[selectedData.length -1].measure}</text>
             <Line xScale={xScale} yScale={yScale} lineColour={lineColour} selectedData={selectedData}/>
-            <Dot  xScale={xScale} yScale={yScale} dotsColour={lineColour} selectedData={selectedData} />
+            <Dots  xScale={xScale} yScale={yScale} dotsColour={lineColour} selectedData={selectedData} />
         </g>);
 
 };
